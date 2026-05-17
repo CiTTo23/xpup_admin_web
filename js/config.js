@@ -1,0 +1,1 @@
+const API_BASE_URL = "https://xp-up-api-production.up.railway.app";

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>XP-Up Admin | Dashboard</title>
+
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+
+<body class="theme-classic">
+
+  <div class="admin-wrapper">
+
+    <aside id="sidebar" class="sidebar"></aside>
+
+    <div class="admin-content">
+
+      <header id="topbar" class="topbar"></header>
+
+      <main class="admin-main">
+
+        <div id="dashboardAlert" class="alert alert-danger d-none" role="alert"></div>
+
+        <section class="row g-4">
+
+          <div class="col-12 col-md-6 col-xl-3">
+            <div class="card stat-card">
+              <div class="card-body">
+                <p class="stat-label">Usuarios</p>
+                <h2 id="totalUsuarios" class="stat-number">-</h2>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-md-6 col-xl-3">
+            <div class="card stat-card">
+              <div class="card-body">
+                <p class="stat-label">Publicaciones</p>
+                <h2 id="totalPublicaciones" class="stat-number">-</h2>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-md-6 col-xl-3">
+            <div class="card stat-card">
+              <div class="card-body">
+                <p class="stat-label">Comentarios</p>
+                <h2 id="totalComentarios" class="stat-number">-</h2>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-md-6 col-xl-3">
+            <div class="card stat-card">
+              <div class="card-body">
+                <p class="stat-label">Likes</p>
+                <h2 id="totalLikes" class="stat-number">-</h2>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-md-6 col-xl-3">
+            <div class="card stat-card">
+              <div class="card-body">
+                <p class="stat-label">Guardados</p>
+                <h2 id="totalGuardados" class="stat-number">-</h2>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-md-6 col-xl-3">
+            <div class="card stat-card">
+              <div class="card-body">
+                <p class="stat-label">Seguimientos</p>
+                <h2 id="totalSeguimientos" class="stat-number">-</h2>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-md-6 col-xl-3">
+            <div class="card stat-card">
+              <div class="card-body">
+                <p class="stat-label">Operaciones admin</p>
+                <h2 id="totalOperacionesAdmin" class="stat-number">-</h2>
+              </div>
+            </div>
+          </div>
+
+        </section>
+
+      </main>
+
+    </div>
+
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script src="js/config.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/apiClient.js"></script>
+  <script src="js/layout.js"></script>
+  <script src="js/dashboard.js"></script>
+</body>
+</html>

@@ -1,0 +1,706 @@
+:root {
+  --xpup-radius: 18px;
+}
+
+/* ========================= */
+/* TEMA XP-UP CLASSIC */
+/* ========================= */
+
+.theme-classic {
+  --xpup-background: #1A1A1A;
+  --xpup-card-background: #252525;
+  --xpup-primary: #FFEA00;
+  --xpup-primary-dark: #FFEA00;
+  --xpup-accent: #FF9800;
+  --xpup-text-primary: #EAEAEA;
+  --xpup-text-secondary: #B0B0B0;
+  --xpup-divider: #2A2A2A;
+  --xpup-progress-track: #5A4710;
+  --xpup-error: #FF5252;
+}
+
+/* ========================= */
+/* TEMA XP-UP LIGHT BLUE */
+/* ========================= */
+
+.theme-light-blue {
+  --xpup-background: #F7F8FA;
+  --xpup-card-background: #FFFFFF;
+  --xpup-primary: #2563EB;
+  --xpup-primary-dark: #1E3A8A;
+  --xpup-accent: #F59E0B;
+  --xpup-text-primary: #111827;
+  --xpup-text-secondary: #6B7280;
+  --xpup-divider: #E5E7EB;
+  --xpup-progress-track: #BFDBFE;
+  --xpup-error: #DC2626;
+}
+
+/* ========================= */
+/* BASE */
+/* ========================= */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--xpup-background);
+  color: var(--xpup-text-primary);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+/* ========================= */
+/* LOGIN */
+/* ========================= */
+
+.login-page {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top left, rgba(255, 234, 0, 0.16), transparent 32%),
+    radial-gradient(circle at bottom right, rgba(255, 152, 0, 0.14), transparent 30%),
+    var(--xpup-background);
+}
+
+.login-card {
+  width: 100%;
+  max-width: 430px;
+  border: 1px solid var(--xpup-divider);
+  border-radius: 24px;
+  overflow: hidden;
+  background-color: var(--xpup-card-background);
+  color: var(--xpup-text-primary);
+}
+
+.login-logo {
+  width: 72px;
+  height: 72px;
+  margin: 0 auto;
+  border-radius: 22px;
+  background: linear-gradient(135deg, var(--xpup-primary), var(--xpup-accent));
+  color: #1A1A1A;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  font-size: 1.5rem;
+  letter-spacing: -1px;
+  box-shadow: 0 0 28px rgba(255, 234, 0, 0.24);
+}
+
+.login-card h1 {
+  color: var(--xpup-text-primary);
+}
+
+.text-muted {
+  color: var(--xpup-text-secondary) !important;
+}
+
+/* ========================= */
+/* FORMULARIOS */
+/* ========================= */
+
+.form-label {
+  color: var(--xpup-text-primary);
+  font-weight: 500;
+}
+
+.form-control {
+  border-radius: 12px;
+  padding: 0.75rem 0.9rem;
+  background-color: #1F1F1F;
+  border: 1px solid var(--xpup-divider);
+  color: var(--xpup-text-primary);
+}
+
+.form-control::placeholder {
+  color: var(--xpup-text-secondary);
+}
+
+.form-control:focus {
+  background-color: #1F1F1F;
+  border-color: var(--xpup-primary);
+  color: var(--xpup-text-primary);
+  box-shadow: 0 0 0 0.2rem rgba(255, 234, 0, 0.18);
+}
+
+/* ========================= */
+/* BOTONES */
+/* ========================= */
+
+.btn {
+  border-radius: 12px;
+  padding: 0.75rem 1rem;
+  font-weight: 700;
+}
+
+.btn-primary {
+  background-color: var(--xpup-primary);
+  border-color: var(--xpup-primary);
+  color: #1A1A1A;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+  background-color: var(--xpup-accent);
+  border-color: var(--xpup-accent);
+  color: #1A1A1A;
+}
+
+/* ========================= */
+/* ALERTAS */
+/* ========================= */
+
+.alert-danger {
+  background-color: rgba(255, 82, 82, 0.14);
+  border-color: rgba(255, 82, 82, 0.45);
+  color: var(--xpup-error);
+  border-radius: 14px;
+}
+
+/* ========================= */
+/* LAYOUT ADMIN FUTURO */
+/* ========================= */
+
+.admin-wrapper {
+  min-height: 100vh;
+  display: flex;
+  background-color: var(--xpup-background);
+}
+
+.sidebar {
+  width: 260px;
+  background-color: var(--xpup-card-background);
+  border-right: 1px solid var(--xpup-divider);
+  color: var(--xpup-text-primary);
+  min-height: 100vh;
+  padding: 1rem;
+}
+
+.sidebar a {
+  display: block;
+  color: var(--xpup-text-secondary);
+  text-decoration: none;
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  margin-bottom: 0.25rem;
+  font-weight: 500;
+}
+
+.sidebar a:hover,
+.sidebar a.active {
+  background-color: var(--xpup-primary);
+  color: #1A1A1A;
+}
+
+.admin-main {
+  flex: 1;
+  padding: 1.5rem;
+}
+
+.admin-card,
+.stat-card,
+.table-card {
+  background-color: var(--xpup-card-background);
+  color: var(--xpup-text-primary);
+  border: 1px solid var(--xpup-divider);
+  border-radius: var(--xpup-radius);
+}
+
+.table {
+  color: var(--xpup-text-primary);
+}
+
+.table thead th {
+  color: var(--xpup-text-secondary);
+  border-bottom-color: var(--xpup-divider);
+}
+
+.table td {
+  border-color: var(--xpup-divider);
+}
+
+
+/* ========================= */
+/* ADMIN LAYOUT */
+/* ========================= */
+
+.admin-content {
+  flex: 1;
+  min-height: 100vh;
+  background-color: var(--xpup-background);
+}
+
+.topbar {
+  min-height: 86px;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--xpup-divider);
+  background-color: var(--xpup-card-background);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sidebar-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.sidebar-logo {
+  width: 48px;
+  height: 48px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, var(--xpup-primary), var(--xpup-accent));
+  color: #1A1A1A;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+}
+
+.sidebar-title {
+  color: var(--xpup-text-primary);
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.sidebar-subtitle {
+  color: var(--xpup-text-secondary);
+  font-size: 0.85rem;
+}
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-user-pill {
+  border: 1px solid var(--xpup-divider);
+  background-color: #1F1F1F;
+  border-radius: 999px;
+  padding: 0.45rem 0.85rem;
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.admin-user-name {
+  color: var(--xpup-text-primary);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.admin-user-role {
+  color: var(--xpup-primary);
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.stat-card {
+  min-height: 140px;
+  transition: transform 0.15s ease, border-color 0.15s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--xpup-primary);
+}
+
+.stat-label {
+  color: var(--xpup-text-secondary);
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.stat-number {
+  color: var(--xpup-primary);
+  font-weight: 900;
+  font-size: 2.3rem;
+  margin: 0;
+}
+
+.btn-outline-warning {
+  color: var(--xpup-primary);
+  border-color: var(--xpup-primary);
+}
+
+.btn-outline-warning:hover {
+  background-color: var(--xpup-primary);
+  border-color: var(--xpup-primary);
+  color: #1A1A1A;
+}
+
+
+/* ========================= */
+/* ADMIN SECTIONS */
+/* ========================= */
+
+.admin-section-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.admin-section-title h2 {
+  color: var(--xpup-text-primary);
+  font-weight: 800;
+}
+
+.admin-filter-form {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.filter-field {
+  min-width: 190px;
+}
+
+.filter-field-small {
+  min-width: 130px;
+}
+
+.filter-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* ========================= */
+/* TABLE CARD */
+/* ========================= */
+
+.table-card {
+  background-color: var(--xpup-card-background);
+  border: 1px solid var(--xpup-divider);
+  border-radius: 22px;
+  overflow: hidden;
+}
+
+.table-card .card-body {
+  background-color: var(--xpup-card-background);
+  color: var(--xpup-text-primary);
+}
+
+/* ========================= */
+/* XP-UP DARK TABLE */
+/* ========================= */
+
+.table-responsive {
+  border: 1px solid var(--xpup-divider);
+  border-radius: 16px;
+  overflow: hidden;
+  background-color: var(--xpup-card-background);
+}
+
+.xpup-table {
+  margin-bottom: 0;
+
+  --bs-table-bg: var(--xpup-card-background);
+  --bs-table-color: var(--xpup-text-primary);
+  --bs-table-border-color: var(--xpup-divider);
+  --bs-table-hover-bg: rgba(255, 234, 0, 0.055);
+  --bs-table-hover-color: var(--xpup-text-primary);
+}
+
+.xpup-table > :not(caption) > * > * {
+  background-color: var(--xpup-card-background) !important;
+  color: var(--xpup-text-primary) !important;
+  border-color: var(--xpup-divider) !important;
+  box-shadow: none !important;
+}
+
+.xpup-table thead th {
+  background-color: #1F1F1F !important;
+  color: var(--xpup-text-secondary) !important;
+  border-bottom: 1px solid var(--xpup-divider) !important;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+  padding: 0.95rem 0.75rem;
+}
+
+.xpup-table tbody td {
+  vertical-align: middle;
+  white-space: nowrap;
+  padding: 0.95rem 0.75rem;
+}
+
+.xpup-table tbody tr:hover td {
+  background-color: rgba(255, 234, 0, 0.045) !important;
+}
+
+/* ========================= */
+/* USER AVATAR / BADGES */
+/* ========================= */
+
+.user-avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--xpup-primary), var(--xpup-accent));
+  color: #1A1A1A;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  font-size: 0.85rem;
+  flex-shrink: 0;
+}
+
+.badge {
+  border-radius: 999px;
+  padding: 0.45rem 0.7rem;
+  font-weight: 800;
+}
+
+.role-user {
+  background-color: rgba(176, 176, 176, 0.14);
+  color: var(--xpup-text-secondary);
+  border: 1px solid rgba(176, 176, 176, 0.25);
+}
+
+.role-admin {
+  background-color: rgba(255, 152, 0, 0.14);
+  color: var(--xpup-accent);
+  border: 1px solid rgba(255, 152, 0, 0.35);
+}
+
+.role-superadmin {
+  background-color: rgba(255, 234, 0, 0.16);
+  color: var(--xpup-primary);
+  border: 1px solid rgba(255, 234, 0, 0.4);
+}
+
+/* ========================= */
+/* FORM CONTROLS DARK */
+/* ========================= */
+
+.form-control-sm,
+.form-select-sm {
+  min-height: 46px;
+  padding: 0.55rem 0.85rem;
+}
+
+.form-select {
+  border-radius: 12px;
+  background-color: #1F1F1F;
+  border: 1px solid var(--xpup-divider);
+  color: var(--xpup-text-primary);
+}
+
+.form-select:focus {
+  background-color: #1F1F1F;
+  border-color: var(--xpup-primary);
+  color: var(--xpup-text-primary);
+  box-shadow: 0 0 0 0.2rem rgba(255, 234, 0, 0.18);
+}
+
+.form-select option {
+  background-color: #1F1F1F;
+  color: var(--xpup-text-primary);
+}
+
+.btn-sm {
+  min-height: 46px;
+  padding: 0.55rem 0.95rem;
+}
+
+.btn-outline-secondary {
+  color: var(--xpup-text-secondary);
+  border-color: var(--xpup-divider);
+}
+
+.btn-outline-secondary:hover {
+  background-color: var(--xpup-divider);
+  border-color: var(--xpup-divider);
+  color: var(--xpup-text-primary);
+}
+
+/* ========================= */
+/* RESPONSIVE */
+/* ========================= */
+
+@media (max-width: 992px) {
+  .admin-section-header {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .admin-filter-form {
+    justify-content: flex-start;
+  }
+
+  .filter-field,
+  .filter-field-small {
+    min-width: 100%;
+  }
+
+  .filter-actions {
+    width: 100%;
+  }
+
+  .filter-actions .btn {
+    flex: 1;
+  }
+}
+
+.post-thumb {
+  width: 56px;
+  height: 56px;
+  object-fit: cover;
+  border-radius: 14px;
+  border: 1px solid var(--xpup-divider);
+  background: var(--xpup-card-background);
+}
+
+.post-thumb-placeholder {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--xpup-primary), var(--xpup-accent));
+  color: #111827;
+  font-weight: 800;
+  font-size: 0.85rem;
+}
+
+.post-detail-placeholder {
+  min-height: 180px;
+  border-radius: 18px;
+  border: 1px dashed var(--xpup-divider);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--xpup-text-secondary);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.xpup-modal {
+  background: var(--xpup-card-background);
+  color: var(--xpup-text-primary);
+  border: 1px solid var(--xpup-divider);
+  border-radius: 22px;
+}
+
+.xpup-modal .modal-header,
+.xpup-modal .modal-footer {
+  border-color: var(--xpup-divider);
+}
+
+.xpup-modal .form-control,
+.xpup-modal .form-select {
+  background-color: #181818;
+  color: var(--xpup-text-primary);
+  border-color: var(--xpup-divider);
+}
+
+.xpup-modal .form-control:focus,
+.xpup-modal .form-select:focus {
+  background-color: #181818;
+  color: var(--xpup-text-primary);
+  border-color: var(--xpup-primary);
+  box-shadow: 0 0 0 0.2rem rgba(255, 234, 0, 0.15);
+}
+
+/* ========================= */
+/* FIX LAYOUT POSTS / TABLAS GRANDES */
+/* ========================= */
+
+.admin-wrapper {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+}
+
+.sidebar {
+  width: 260px;
+  min-width: 260px;
+  max-width: 260px;
+  flex: 0 0 260px;
+  flex-shrink: 0;
+}
+
+.admin-content {
+  flex: 1;
+  min-width: 0;
+  overflow-x: hidden;
+}
+
+.admin-main {
+  width: 100%;
+  min-width: 0;
+}
+
+.table-card {
+  width: 100%;
+  overflow: hidden;
+}
+
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+/* Evita que la tabla de publicaciones reviente el layout */
+.xpup-table {
+  min-width: 1200px;
+}
+
+/* ========================= */
+/* MODALS ADMIN */
+/* ========================= */
+
+.xpup-modal {
+  background-color: var(--xpup-card-background);
+  color: var(--xpup-text-primary);
+  border: 1px solid var(--xpup-divider);
+  border-radius: 22px;
+}
+
+.xpup-modal .modal-header,
+.xpup-modal .modal-footer {
+  border-color: var(--xpup-divider);
+}
+
+.xpup-modal .modal-title {
+  color: var(--xpup-text-primary);
+  font-weight: 800;
+}
+
+.alert-success {
+  background-color: rgba(255, 234, 0, 0.12);
+  border-color: rgba(255, 234, 0, 0.35);
+  color: var(--xpup-primary);
+  border-radius: 14px;
+}
+
+.btn-danger {
+  background-color: var(--xpup-error);
+  border-color: var(--xpup-error);
+  color: #1A1A1A;
+}
+
+.btn-danger:hover {
+  background-color: #ff7676;
+  border-color: #ff7676;
+  color: #1A1A1A;
+}
+
+.btn-outline-danger {
+  color: var(--xpup-error);
+  border-color: var(--xpup-error);
+}
+
+.btn-outline-danger:hover {
+  background-color: var(--xpup-error);
+  border-color: var(--xpup-error);
+  color: #1A1A1A;
+}

@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>XP-Up Admin | Usuarios</title>
+
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+
+<body class="theme-classic">
+
+  <div class="admin-wrapper">
+
+    <aside id="sidebar" class="sidebar"></aside>
+
+    <div class="admin-content">
+
+      <header id="topbar" class="topbar"></header>
+
+      <main class="admin-main">
+
+        <div id="usersAlert" class="alert alert-danger d-none" role="alert"></div>
+
+        <section class="card table-card mb-4">
+          <div class="card-body">
+
+            <div class="admin-section-header mb-4">
+              <div class="admin-section-title">
+                <h2 class="h5 mb-1">Gestión de usuarios</h2>
+                <p class="text-muted mb-0">
+                  Consulta, edición y eliminación de usuarios registrados en XP-Up.
+                </p>
+              </div>
+
+              <form id="usersFilterForm" class="admin-filter-form">
+                <div class="filter-field">
+                  <label for="searchInput" class="form-label small">Buscar</label>
+                  <input
+                    type="text"
+                    id="searchInput"
+                    class="form-control form-control-sm"
+                    placeholder="Nombre o email"
+                  />
+                </div>
+
+                <div class="filter-field filter-field-small">
+                  <label for="roleSelect" class="form-label small">Rol</label>
+                  <select id="roleSelect" class="form-select form-select-sm">
+                    <option value="">Todos</option>
+                    <option value="USER">USER</option>
+                    <option value="ADMIN">ADMIN</option>
+                    <option value="SUPERADMIN">SUPERADMIN</option>
+                  </select>
+                </div>
+
+                <div class="filter-actions">
+                  <button type="submit" class="btn btn-primary btn-sm">
+                    Filtrar
+                  </button>
+
+                  <button type="button" id="clearFiltersButton" class="btn btn-outline-secondary btn-sm">
+                    Limpiar
+                  </button>
+                </div>
+              </form>
+            </div>
+
+            <div class="table-responsive">
+              <table class="table table-hover align-middle xpup-table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Usuario</th>
+                    <th>Email</th>
+                    <th>Rol</th>
+                    <th>Nivel</th>
+                    <th>XP</th>
+                    <th>Publicaciones</th>
+                    <th>Seguidores</th>
+                    <th>Seguidos</th>
+                    <th>Registro</th>
+                    <th class="text-end">Acciones</th>
+                  </tr>
+                </thead>
+
+                <tbody id="usersTableBody">
+                  <tr>
+                    <td colspan="11" class="text-center text-muted py-4">
+                      Cargando usuarios...
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mt-3">
+              <p id="usersPaginationInfo" class="text-muted mb-0 small">
+                -
+              </p>
+
+              <div class="d-flex gap-2">
+                <button id="prevPageButton" class="btn btn-outline-warning btn-sm">
+                  Anterior
+                </button>
+
+                <button id="nextPageButton" class="btn btn-outline-warning btn-sm">
+                  Siguiente
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+      </main>
+
+    </div>
+
+  </div>
+
+  <!-- Modal editar usuario -->
+  <div class="modal fade" id="editUserModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content xpup-modal">
+        <form id="editUserForm">
+          <div class="modal-header">
+            <h5 class="modal-title">Editar usuario</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+          </div>
+
+          <div class="modal-body">
+            <input type="hidden" id="editUserId" />
+
+            <div class="row g-3">
+              <div class="col-12 col-md-6">
+                <label for="editNombreUsuario" class="form-label">Nombre de usuario</label>
+                <input
+                  type="text"
+                  id="editNombreUsuario"
+                  class="form-control"
+                  minlength="3"
+                  maxlength="20"
+                  required
+                />
+              </div>
+
+              <div class="col-12 col-md-6">
+                <label for="editEmail" class="form-label">Email</label>
+                <input
+                  type="email"
+                  id="editEmail"
+                  class="form-control"
+                  maxlength="50"
+                  required
+                />
+              </div>
+
+              <div class="col-12">
+                <label for="editFotoPerfil" class="form-label">Foto de perfil</label>
+                <input
+                  type="text"
+                  id="editFotoPerfil"
+                  class="form-control"
+                  maxlength="255"
+                  placeholder="URL de imagen"
+                />
+              </div>
+
+              <div class="col-12">
+                <label for="editBiografia" class="form-label">Biografía</label>
+                <textarea
+                  id="editBiografia"
+                  class="form-control"
+                  rows="3"
+                  maxlength="255"
+                  placeholder="Biografía del usuario"
+                ></textarea>
+              </div>
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-dismiss="modal">
+              Cancelar
+            </button>
+
+            <button type="submit" class="btn btn-primary btn-sm">
+              Guardar cambios
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal cambiar rol -->
+  <div class="modal fade" id="changeRoleModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content xpup-modal">
+        <form id="changeRoleForm">
+          <div class="modal-header">
+            <h5 class="modal-title">Cambiar rol</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+          </div>
+
+          <div class="modal-body">
+            <input type="hidden" id="roleUserId" />
+
+            <p class="text-muted mb-3">
+              Usuario: <span id="roleUserName" class="fw-bold"></span>
+            </p>
+
+            <label for="newRoleSelect" class="form-label">Nuevo rol</label>
+            <select id="newRoleSelect" class="form-select" required>
+              <option value="USER">USER</option>
+              <option value="ADMIN">ADMIN</option>
+              <option value="SUPERADMIN">SUPERADMIN</option>
+            </select>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-dismiss="modal">
+              Cancelar
+            </button>
+
+            <button type="submit" class="btn btn-primary btn-sm">
+              Cambiar rol
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal borrar usuario -->
+  <div class="modal fade" id="deleteUserModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content xpup-modal">
+        <div class="modal-header">
+          <h5 class="modal-title">Eliminar usuario</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+
+        <div class="modal-body">
+          <input type="hidden" id="deleteUserId" />
+
+          <p class="mb-2">
+            Vas a eliminar al usuario:
+          </p>
+
+          <p id="deleteUserName" class="fw-bold mb-3"></p>
+
+          <div class="alert alert-danger mb-0">
+            Esta acción puede eliminar sus datos asociados. Úsala solo para pruebas o moderación real.
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-dismiss="modal">
+            Cancelar
+          </button>
+
+          <button type="button" id="confirmDeleteUserButton" class="btn btn-danger btn-sm">
+            Eliminar usuario
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script src="js/config.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/apiClient.js"></script>
+  <script src="js/layout.js"></script>
+  <script src="js/users.js"></script>
+</body>
+</html>

@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>XP-Up Admin | Publicaciones</title>
+
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+
+<body class="theme-classic">
+
+  <div class="admin-wrapper">
+
+    <aside id="sidebar" class="sidebar"></aside>
+
+    <div class="admin-content">
+
+      <header id="topbar" class="topbar"></header>
+
+      <main class="admin-main">
+
+        <div id="postsAlert" class="alert alert-danger d-none" role="alert"></div>
+
+        <section class="card table-card mb-4">
+          <div class="card-body">
+
+            <div class="admin-section-header mb-4">
+              <div class="admin-section-title">
+                <h2 class="h5 mb-1">Gestión de publicaciones</h2>
+                <p class="text-muted mb-0">
+                  Consulta, revisión y moderación de publicaciones de XP-Up.
+                </p>
+              </div>
+
+              <form id="postsFilterForm" class="admin-filter-form">
+                <div class="filter-field">
+                  <label for="postSearchInput" class="form-label small">Buscar</label>
+                  <input
+                    type="text"
+                    id="postSearchInput"
+                    class="form-control form-control-sm"
+                    placeholder="Título, descripción o juego"
+                  />
+                </div>
+
+                <div class="filter-field filter-field-small">
+                  <label for="postUserIdInput" class="form-label small">Usuario ID</label>
+                  <input
+                    type="number"
+                    id="postUserIdInput"
+                    class="form-control form-control-sm"
+                    placeholder="ID"
+                    min="1"
+                  />
+                </div>
+
+                <div class="filter-actions">
+                  <button type="submit" class="btn btn-primary btn-sm">
+                    Filtrar
+                  </button>
+
+                  <button type="button" id="clearPostFiltersButton" class="btn btn-outline-secondary btn-sm">
+                    Limpiar
+                  </button>
+                </div>
+              </form>
+            </div>
+
+            <div class="table-responsive">
+              <table class="table table-hover align-middle xpup-table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Publicación</th>
+                    <th>Usuario</th>
+                    <th>Juego</th>
+                    <th>Tipo</th>
+                    <th>Likes</th>
+                    <th>Comentarios</th>
+                    <th>Guardados</th>
+                    <th>Fecha</th>
+                    <th class="text-end">Acciones</th>
+                  </tr>
+                </thead>
+
+                <tbody id="postsTableBody">
+                  <tr>
+                    <td colspan="10" class="text-center text-muted py-4">
+                      Cargando publicaciones...
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mt-3">
+              <p id="postsPaginationInfo" class="text-muted mb-0 small">
+                -
+              </p>
+
+              <div class="d-flex gap-2">
+                <button id="prevPostsPageButton" class="btn btn-outline-warning btn-sm">
+                  Anterior
+                </button>
+
+                <button id="nextPostsPageButton" class="btn btn-outline-warning btn-sm">
+                  Siguiente
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+      </main>
+
+    </div>
+
+  </div>
+
+  <!-- Modal detalle -->
+  <div class="modal fade" id="postDetailModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content xpup-modal">
+        <div class="modal-header">
+          <h5 class="modal-title">Detalle de publicación</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+
+        <div class="modal-body" id="postDetailBody">
+          Cargando...
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-dismiss="modal">
+            Cerrar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal editar -->
+  <div class="modal fade" id="postEditModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content xpup-modal">
+        <div class="modal-header">
+          <h5 class="modal-title">Editar publicación</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+
+        <form id="editPostForm">
+          <div class="modal-body">
+
+            <input type="hidden" id="editPostId" />
+
+            <div class="row g-3">
+              <div class="col-12">
+                <label for="editPostTitle" class="form-label">Título</label>
+                <input type="text" id="editPostTitle" class="form-control" maxlength="75" required />
+              </div>
+
+              <div class="col-12">
+                <label for="editPostDescription" class="form-label">Descripción</label>
+                <textarea id="editPostDescription" class="form-control" rows="3" maxlength="2000"></textarea>
+              </div>
+
+              <div class="col-md-6">
+                <label for="editPostType" class="form-label">Tipo de contenido</label>
+                <select id="editPostType" class="form-select">
+                  <option value="IMAGEN">IMAGEN</option>
+                  <option value="VIDEO">VIDEO</option>
+                </select>
+              </div>
+
+              <div class="col-md-6">
+                <label for="editPostGameName" class="form-label">Nombre del juego</label>
+                <input type="text" id="editPostGameName" class="form-control" maxlength="50" required />
+              </div>
+
+              <div class="col-md-6">
+                <label for="editPostGameId" class="form-label">ID juego API</label>
+                <input type="text" id="editPostGameId" class="form-control" maxlength="50" required />
+              </div>
+
+              <div class="col-md-6">
+                <label for="editPostGameCover" class="form-label">URL portada juego</label>
+                <input type="text" id="editPostGameCover" class="form-control" maxlength="255" />
+              </div>
+
+              <div class="col-12">
+                <label for="editPostFileUrl" class="form-label">URL archivo</label>
+                <input type="text" id="editPostFileUrl" class="form-control" maxlength="255" required />
+              </div>
+
+              <div class="col-12">
+                <label for="editPostThumbnailUrl" class="form-label">URL miniatura</label>
+                <input type="text" id="editPostThumbnailUrl" class="form-control" maxlength="255" />
+              </div>
+            </div>
+
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-dismiss="modal">
+              Cancelar
+            </button>
+
+            <button type="submit" class="btn btn-primary btn-sm">
+              Guardar cambios
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal eliminar -->
+  <div class="modal fade" id="postDeleteModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content xpup-modal">
+        <div class="modal-header">
+          <h5 class="modal-title">Eliminar publicación</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+
+        <div class="modal-body">
+          <p class="mb-1">¿Seguro que quieres eliminar esta publicación?</p>
+          <p class="text-muted small mb-0">
+            Esta acción eliminará también sus likes, guardados y comentarios asociados.
+          </p>
+
+          <input type="hidden" id="deletePostId" />
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-dismiss="modal">
+            Cancelar
+          </button>
+
+          <button type="button" id="confirmDeletePostButton" class="btn btn-danger btn-sm">
+            Eliminar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script src="js/config.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/apiClient.js"></script>
+  <script src="js/layout.js"></script>
+  <script src="js/posts.js"></script>
+</body>
+</html>
