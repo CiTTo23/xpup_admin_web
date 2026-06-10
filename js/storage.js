@@ -1,3 +1,10 @@
+/**
+ * session.js
+ *
+ * Gestiona la sesión del administrador en el panel.
+ * Guarda el token JWT y los datos del usuario en localStorage.
+ */
+
 const TOKEN_KEY = "xpup_admin_token";
 const USER_KEY = "xpup_admin_user";
 
@@ -31,10 +38,12 @@ function isAdminUser() {
     return false;
   }
 
+  // Comprueba que el usuario tenga permisos administrativos.
   return user.rol === "ADMIN" || user.rol === "SUPERADMIN";
 }
 
 function redirectIfAlreadyLoggedIn() {
+  // Evita mostrar el login si ya existe una sesión válida.
   if (isAuthenticated() && isAdminUser()) {
     window.location.href = "dashboard.html";
   }

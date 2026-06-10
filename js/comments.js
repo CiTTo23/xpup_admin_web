@@ -1,3 +1,10 @@
+/**
+ * comments.js
+ *
+ * Gestiona la administración de comentarios del panel.
+ * Permite listar, filtrar, paginar, ver, editar y eliminar comentarios.
+ */
+
 let commentsCurrentPage = 0;
 let commentsTotalPages = 0;
 
@@ -8,12 +15,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
   loadComments();
 
+  // Aplica los filtros de búsqueda.
   document.getElementById("commentsFilterForm").addEventListener("submit", (event) => {
     event.preventDefault();
     commentsCurrentPage = 0;
     loadComments();
   });
 
+  // Limpia los filtros y recarga el listado.
   document.getElementById("clearCommentFiltersButton").addEventListener("click", () => {
     document.getElementById("commentSearchInput").value = "";
     document.getElementById("commentPostIdInput").value = "";
@@ -22,6 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
     loadComments();
   });
 
+  // Navegación entre páginas.
   document.getElementById("prevCommentsPageButton").addEventListener("click", () => {
     if (commentsCurrentPage > 0) {
       commentsCurrentPage--;
@@ -67,6 +77,7 @@ async function loadComments() {
   }
 
   try {
+    // Solicita al backend la página actual de comentarios.
     const data = await commentsRequest(`/api/admin/comments?${params.toString()}`, "GET");
 
     if (!data || !Array.isArray(data.content)) {
@@ -98,6 +109,7 @@ function renderComments(data) {
     return;
   }
 
+  // Construye dinámicamente las filas de la tabla.
   tbody.innerHTML = data.content.map((comment) => {
     const usuario = comment.usuario || {};
     const username = usuario.nombreUsuario || "Usuario desconocido";
@@ -186,6 +198,7 @@ async function handleCommentTableClick(event) {
   const action = button.dataset.action;
   const commentId = button.dataset.id;
 
+  // Ejecuta la acción seleccionada en la tabla.
   if (action === "view") {
     await openCommentDetail(commentId);
   }
@@ -201,6 +214,7 @@ async function handleCommentTableClick(event) {
 
 async function openCommentDetail(commentId) {
   try {
+    // Carga el detalle completo del comentario seleccionado.
     const comment = await commentsRequest(`/api/admin/comments/${commentId}`, "GET");
 
     const content = document.getElementById("commentDetailContent");
@@ -275,6 +289,7 @@ async function handleEditCommentSubmit(event) {
   }
 
   try {
+    // Actualiza el contenido del comentario.
     await commentsRequest(`/api/admin/comments/${commentId}`, "PATCH", {
       contenido
     });
@@ -301,6 +316,7 @@ async function deleteSelectedComment() {
   const commentId = document.getElementById("deleteCommentId").value;
 
   try {
+    // Elimina el comentario seleccionado.
     await commentsRequest(`/api/admin/comments/${commentId}`, "DELETE");
 
     const modalElement = document.getElementById("deleteCommentModal");

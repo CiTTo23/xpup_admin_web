@@ -1,3 +1,10 @@
+/**
+ * posts.js
+ *
+ * Gestiona la administración de publicaciones.
+ * Permite listar, filtrar, paginar, ver, editar y eliminar publicaciones.
+ */
+
 const POSTS_PAGE_SIZE = 10;
 
 let postsCurrentPage = 0;
@@ -11,12 +18,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
   loadPosts();
 
+  // Aplica los filtros de búsqueda.
   document.getElementById("postsFilterForm").addEventListener("submit", function (event) {
     event.preventDefault();
     postsCurrentPage = 0;
     loadPosts();
   });
 
+  // Limpia los filtros y recarga el listado.
   document.getElementById("clearPostFiltersButton").addEventListener("click", function () {
     document.getElementById("postSearchInput").value = "";
     document.getElementById("postUserIdInput").value = "";
@@ -24,6 +33,7 @@ document.addEventListener("DOMContentLoaded", function () {
     loadPosts();
   });
 
+  // Navegación entre páginas.
   document.getElementById("prevPostsPageButton").addEventListener("click", function () {
     if (postsCurrentPage > 0) {
       postsCurrentPage--;
@@ -64,6 +74,7 @@ async function loadPosts() {
   }
 
   try {
+    // Solicita al backend las publicaciones paginadas.
     const data = await adminRequest(`/api/admin/posts?${params.toString()}`);
 
     if (!data || !Array.isArray(data.content)) {
@@ -95,6 +106,7 @@ function renderPosts(data) {
     return;
   }
 
+  // Construye dinámicamente las filas de la tabla.
   tbody.innerHTML = data.content.map(function (post) {
     const usuario = post.usuario || {};
     const fecha = formatDate(post.fechaPublicacion);
@@ -206,6 +218,7 @@ async function handlePostTableClick(event) {
   const action = button.dataset.action;
   const postId = button.dataset.id;
 
+  // Ejecuta la acción seleccionada en la tabla.
   if (action === "detail") {
     await openPostDetail(postId);
     return;
@@ -225,6 +238,7 @@ async function openPostDetail(postId) {
   hidePostsAlert();
 
   try {
+    // Carga el detalle completo de la publicación.
     const post = await adminRequest(`/api/admin/posts/${postId}`);
 
     const modalBody = document.getElementById("postDetailBody");
@@ -370,6 +384,7 @@ async function handleEditPostSubmit(event) {
   };
 
   try {
+    // Actualiza la publicación con los datos del formulario.
     await adminRequest(`/api/admin/posts/${postId}`, {
       method: "PATCH",
       body: body
@@ -398,6 +413,7 @@ async function deleteSelectedPost() {
   const postId = document.getElementById("deletePostId").value;
 
   try {
+    // Elimina la publicación seleccionada.
     await adminRequest(`/api/admin/posts/${postId}`, {
       method: "DELETE"
     });

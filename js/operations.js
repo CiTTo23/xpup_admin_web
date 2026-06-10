@@ -1,3 +1,10 @@
+/**
+ * operations.js
+ *
+ * Gestiona el historial de operaciones administrativas.
+ * Permite listar, filtrar, paginar y consultar el detalle de cada operación.
+ */
+
 let operationsCurrentPage = 0;
 let operationsTotalPages = 0;
 let currentOperations = [];
@@ -9,12 +16,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
   loadOperations();
 
+  // Aplica los filtros de búsqueda.
   document.getElementById("operationsFilterForm").addEventListener("submit", (event) => {
     event.preventDefault();
     operationsCurrentPage = 0;
     loadOperations();
   });
 
+  // Limpia los filtros y recarga el listado.
   document.getElementById("clearOperationFiltersButton").addEventListener("click", () => {
     document.getElementById("operationTypeInput").value = "";
     document.getElementById("operationEntitySelect").value = "";
@@ -24,6 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
     loadOperations();
   });
 
+  // Navegación entre páginas.
   document.getElementById("prevOperationsPageButton").addEventListener("click", () => {
     if (operationsCurrentPage > 0) {
       operationsCurrentPage--;
@@ -65,6 +75,7 @@ async function loadOperations() {
   }
 
   try {
+    // Solicita al backend las operaciones paginadas.
     const data = await operationsRequest(`/api/admin/operations?${params.toString()}`, "GET");
 
     if (!data || !Array.isArray(data.content)) {
@@ -97,6 +108,7 @@ function renderOperations(data) {
     return;
   }
 
+  // Construye las filas de la tabla con las operaciones recibidas.
   tbody.innerHTML = data.content.map((operation) => {
     return `
       <tr>
@@ -171,6 +183,7 @@ function handleOperationsTableClick(event) {
   const action = button.dataset.action;
   const operationId = Number(button.dataset.id);
 
+  // Abre el detalle de la operación seleccionada.
   if (action === "view") {
     openOperationDetail(operationId);
   }
@@ -186,6 +199,7 @@ function openOperationDetail(operationId) {
 
   const content = document.getElementById("operationDetailContent");
 
+  // Muestra la información completa de la operación en el modal.
   content.innerHTML = `
     <div>
       <p class="text-muted small mb-1">ID operación</p>

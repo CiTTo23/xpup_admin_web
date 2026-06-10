@@ -1,4 +1,12 @@
+/**
+ * layout.js
+ *
+ * Gestiona la estructura común del panel de administración.
+ * Comprueba el acceso, renderiza el menú lateral y muestra la barra superior.
+ */
+
 function requireAdminPage() {
+  // Redirige al login si el usuario no está autenticado o no es administrador.
   if (!isAuthenticated() || !isAdminUser()) {
     clearSession();
     window.location.href = "index.html";
@@ -18,6 +26,7 @@ function renderSidebar(activePage) {
     return;
   }
 
+  // Genera el menú lateral y marca como activa la sección actual.
   sidebar.innerHTML = `
     <div class="sidebar-brand mb-4">
       <div class="sidebar-logo">XP</div>
@@ -60,6 +69,7 @@ function renderTopbar(pageTitle) {
 
   const user = getCurrentUser();
 
+  // Muestra el título de la página y la información del administrador.
   topbar.innerHTML = `
     <div>
       <h1 class="h4 mb-1">${pageTitle}</h1>
@@ -78,6 +88,7 @@ function renderTopbar(pageTitle) {
     </div>
   `;
 
+  // Cierra la sesión y vuelve al login.
   document.getElementById("logoutButton").addEventListener("click", function () {
     clearSession();
     window.location.href = "index.html";

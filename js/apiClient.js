@@ -1,3 +1,10 @@
+/**
+ * api.js
+ *
+ * Cliente HTTP del panel de administración.
+ * Centraliza las peticiones al backend y añade el token JWT cuando existe sesión.
+ */
+
 async function apiRequest(path, options = {}) {
   const token = getToken();
 
@@ -5,6 +12,7 @@ async function apiRequest(path, options = {}) {
     "Content-Type": "application/json"
   };
 
+  // Añade autenticación si hay sesión activa.
   if (token) {
     defaultHeaders["Authorization"] = `Bearer ${token}`;
   }
@@ -17,6 +25,7 @@ async function apiRequest(path, options = {}) {
     }
   });
 
+  // Si la sesión no es válida, vuelve al login.
   if (response.status === 401) {
     clearSession();
     window.location.href = "index.html";
@@ -31,6 +40,7 @@ async function apiRequest(path, options = {}) {
     data = null;
   }
 
+  // Gestiona errores devueltos por el backend.
   if (!response.ok) {
     const message = data && data.message
       ? data.message
@@ -42,6 +52,7 @@ async function apiRequest(path, options = {}) {
   return data;
 }
 
+// Métodos auxiliares para simplificar el uso de la API.
 function apiGet(path) {
   return apiRequest(path, {
     method: "GET"

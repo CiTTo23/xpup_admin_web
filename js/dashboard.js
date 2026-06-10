@@ -1,3 +1,9 @@
+/**
+ * dashboard.js
+ *
+ * Carga las estadísticas generales del panel de administración.
+ */
+
 document.addEventListener("DOMContentLoaded", function () {
   renderAdminLayout("dashboard", "Dashboard");
 
@@ -8,6 +14,7 @@ async function loadDashboardStats() {
   const dashboardAlert = document.getElementById("dashboardAlert");
 
   try {
+    // Obtiene las estadísticas generales del backend.
     const stats = await apiGet("/api/admin/stats");
 
     setText("totalUsuarios", stats.totalUsuarios);
@@ -27,6 +34,7 @@ async function loadDashboardStats() {
 function setText(elementId, value) {
   const element = document.getElementById(elementId);
 
+  // Muestra el valor recibido o 0 si no existe.
   if (element) {
     element.textContent = value ?? 0;
   }

@@ -1,3 +1,10 @@
+/**
+ * users.js
+ *
+ * Gestiona la administración de usuarios.
+ * Permite listar, filtrar, paginar, editar, cambiar roles y eliminar usuarios.
+ */
+
 let currentPage = 0;
 const pageSize = 10;
 let totalPages = 0;
@@ -20,12 +27,14 @@ function configureUsersEvents() {
   const changeRoleForm = document.getElementById("changeRoleForm");
   const confirmDeleteUserButton = document.getElementById("confirmDeleteUserButton");
 
+  // Aplica los filtros de búsqueda.
   filterForm.addEventListener("submit", function (event) {
     event.preventDefault();
     currentPage = 0;
     loadUsers();
   });
 
+  // Limpia los filtros y recarga el listado.
   clearFiltersButton.addEventListener("click", function () {
     document.getElementById("searchInput").value = "";
     document.getElementById("roleSelect").value = "";
@@ -33,6 +42,7 @@ function configureUsersEvents() {
     loadUsers();
   });
 
+  // Navegación entre páginas.
   prevPageButton.addEventListener("click", function () {
     if (currentPage > 0) {
       currentPage--;
@@ -77,6 +87,7 @@ async function loadUsers() {
       params.append("rol", rol);
     }
 
+    // Solicita al backend los usuarios paginados.
     const data = await apiGet(`/api/admin/users?${params.toString()}`);
 
     totalPages = data.totalPages || 0;
@@ -103,6 +114,7 @@ function renderUsersTable(users) {
   const currentUser = getCurrentUser();
   const isSuperadmin = currentUser?.rol === "SUPERADMIN";
 
+  // Construye dinámicamente las filas de la tabla.
   tbody.innerHTML = users.map(user => {
     const isCurrentUser = currentUser?.id === user.id;
 
@@ -198,6 +210,7 @@ function handleUsersTableClick(event) {
     return;
   }
 
+  // Ejecuta la acción seleccionada en la tabla.
   if (action === "edit") {
     openEditUserModal(user);
   }
@@ -236,6 +249,7 @@ async function handleEditUserSubmit(event) {
   };
 
   try {
+    // Actualiza los datos básicos del usuario.
     await usersRequest(`/api/admin/users/${userId}`, "PATCH", body);
 
     closeModal("editUserModal");
@@ -267,6 +281,7 @@ async function handleChangeRoleSubmit(event) {
   };
 
   try {
+    // Actualiza el rol del usuario seleccionado.
     await usersRequest(`/api/admin/users/${userId}/role`, "PATCH", body);
 
     closeModal("changeRoleModal");
@@ -292,6 +307,7 @@ async function handleDeleteUserConfirm() {
   const userId = document.getElementById("deleteUserId").value;
 
   try {
+    // Elimina el usuario seleccionado.
     await usersRequest(`/api/admin/users/${userId}`, "DELETE");
 
     closeModal("deleteUserModal");

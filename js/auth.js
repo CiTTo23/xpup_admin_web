@@ -1,3 +1,10 @@
+/**
+ * login.js
+ *
+ * Gestiona el inicio de sesión del panel de administración.
+ * Valida credenciales, comprueba permisos de administrador y guarda la sesión.
+ */
+
 const loginForm = document.getElementById("loginForm");
 const loginAlert = document.getElementById("loginAlert");
 const loginButton = document.getElementById("loginButton");
@@ -14,6 +21,7 @@ loginForm.addEventListener("submit", async function (event) {
   setLoading(true);
 
   try {
+    // Envía las credenciales al backend.
     const response = await fetch(`${API_BASE_URL}/api/auth/login`, {
       method: "POST",
       headers: {
@@ -39,6 +47,7 @@ loginForm.addEventListener("submit", async function (event) {
       return;
     }
 
+    // Solo permite el acceso a usuarios con rol administrativo.
     if (data.user.rol !== "ADMIN" && data.user.rol !== "SUPERADMIN") {
       showLoginError("No tienes permisos para acceder al panel de administración.");
       setLoading(false);
